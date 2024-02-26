@@ -1,6 +1,10 @@
+import Movies from './pages/Movies'
+
 function App() {
   return (
-    <></>
+    <>
+    <Movies></Movies>
+    </>
   )
 }
 
