@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { NavbarProps } from "./Navbar";
 
 export const Header = styled.header`
     padding-top: 2rem;
@@ -21,9 +20,9 @@ export const LinksContainer = styled.div`
    
 `
 
-export const StyledLink = styled(Link)<NavbarProps>`
+export const StyledLink = styled(Link)`
     text-decoration: none;
-    color: ${({isActive}: NavbarProps) => (isActive ? 'orange': 'white')};
+    color: 'white';
     transition: color 0.15s;
 
     &:hover{

@@ -1,70 +1,71 @@
-const API_URL = 'https://api.themoviedb.org/3/movie/popular';
-const API_KEY = '13727d5610d9836d4eb708f0662a401f';
-const IMAGE_BASE_URL = 'https://image.tmdb.org/t/p/original/';
+import * as movies from './movies-2020s.json';
+import { getRandomInt } from './utils/randomInt';
 
 
-type MovieInfo = {
-    id: number,
-    title: string,
-    rating: number,
-    releseaseDate: string,
-    posterSrc: string,
-    backdropPath: string,
-    overview: string,
-    genreIds: string[],
+export function getMovies(numberPerPage: number, page: number) {
+    const minIndex = numberPerPage * (page - 1);
+    const maxIndex = numberPerPage * page;
+
+    console.log(minIndex, maxIndex)
+    const pageMovies = movies.default.slice(minIndex, maxIndex)
+
+    const result = pageMovies.map((movie: any, index: number) => {       
+        return {
+                id: index,
+                title: movie.title,
+                rating: getRandomInt(5, 10),
+                releseaseDate: `${getRandomInt(1,31)}.${getRandomInt(1,12)}.${movie.year}`,
+                posterSrc: movie.thumbnail,
+        }
+    })
+
+    return result
 }
 
-export const fetchData = async () => {
-        try {
-            const response = await fetch(`${API_URL}?language=en-US&page=1&api_key=${API_KEY}`);
-            if (!response.ok) {
-                throw new Error('Error fetching response');
-            }
-            const data = await response.json();
+export function getMoviesByKeyword(keyword: string) {
+    const filteredMovies = movies.default.filter((movie: any) => movie.title.includes(keyword))
 
-            const moviesResult = data.results.map((movie: any) => ({
-                id: movie.id,
-                title: movie.original_title,
-                rating: Math.round(movie.vote_average * 100) / 100,
-                releseaseDate: movie.release_date,
-                posterSrc: `${IMAGE_BASE_URL}${movie.poster_path}`
-            }));
-
-            return moviesResult;
-            
-        } catch (error) {
-            console.error('Error', error);
-            
-        }
-    };
-
-
-async function fetchSearch(query: string) {
-    const url = `https://api.themoviedb.org/3/search/movie?query=${query}&include_adult=false&language=en-US&page=1&api_key${API_KEY}`;
-    
-    try {
-        const response = await fetch(url);
-        if (!response.ok) {
-            throw new Error('Error fetching response');
-        }
-        const data = await response.json();
-
-        const moviesResult = data.results.map((movie: any) => ({
-            id: movie.id,
-            title: movie.original_title,
-            rating: Math.round(movie.vote_average * 100) / 100,
-            releseaseDate: movie.release_date,
-            posterSrc: `${IMAGE_BASE_URL}${movie.poster_path}`
-        }));
-
-        console.log(moviesResult);
-
-        return moviesResult;
-        
-    } catch (error) {
-        console.error('Error', error);
-    
+    if(!filteredMovies) {
+        return
     }
+
+    const result = filteredMovies.map((movie: any, index: number) => {       
+        return {
+                id: index,
+                title: movie.title,
+                rating: getRandomInt(5, 10),
+                releseaseDate: `${getRandomInt(1,31)}.${getRandomInt(1,12)}.${movie.year}`,
+                posterSrc: movie.thumbnail,
+        }
+    })
+
+    return result
 }
-      
+
+
+export function getMoviesByGenre(genre: string) {
+    if(genre === "All"){
+        return getMovies(20, 1)
+    }
+
+    const filteredMovies = movies.default.filter((movie: any) => movie.genres.includes(genre))
+    console.log(genre)
+
+    if(!filteredMovies) {
+        return
+    }
+
+    const result = filteredMovies.map((movie: any, index: number) => {       
+        return {
+                id: index,
+                title: movie.title,
+                rating: getRandomInt(5, 10),
+                releseaseDate: `${getRandomInt(1,31)}.${getRandomInt(1,12)}.${movie.year}`,
+                posterSrc: movie.thumbnail,
+        }
+    })
+
+    return result
+}
+
 

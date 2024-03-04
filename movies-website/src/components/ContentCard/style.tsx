@@ -4,17 +4,18 @@ export const Card = styled.div`
     max-width: 15rem;
     cursor: pointer;
     transition: transform 0.25s;
-    
-    &:hover{
-        transform: scale(1.05, 1.05);
-    }
+   
 `
 
-export const PosterCard = styled.img`
-    width: 100%;
-    height: auto;
-    border-radius: 0.5rem;
 
+export const PosterCard = styled.img`
+    width: 250px;
+    height: 350px;
+    transition: transform 0.5s;
+
+    &:hover{
+        transform: scale(1.15, 1.15);
+    }
 `
 
 export const TextContainer = styled.div`
@@ -41,6 +42,12 @@ export const StyledCardMovieRating = styled(StyledCardMovieDescription)`
     background-color: rgb(50,50,50);
     color: white;
     padding: 0 0.25rem;
-    border-radius: 0.25rem;
     font-weight: bolder;
+`
+
+export const ContainerPosterCard = styled.div`
+    overflow:hidden;    
+    width: fit-content;
+    height: fit-content;
+    border-radius: 0.5rem;
 `
