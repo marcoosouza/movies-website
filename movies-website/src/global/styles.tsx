@@ -28,7 +28,8 @@ time, mark, audio, video {
 body{
     font-family: "Roboto", sans-serif;
     background-color: black;
-	padding: 0 5rem;
+	padding: 0 5rem 2rem 5rem;
+	
 }
 
 `

@@ -1,31 +1,28 @@
+import { useParams } from "react-router-dom";
+import ButtonsPagination from "../components/ButtonsPagination/ButtonsPagination";
 import ContentDisplay from "../components/ContentDisplay/ContentDisplay";
 import Navbar from "../components/Navbar/Navbar";
 import PageTitle from "../components/PageTitle/PageTitle";
-import { ButtonsContainer, StyledButton } from "./styles";
-import { useMovieFetcher } from "../hooks/useMovieFetcher";
-import { useState } from "react";
+import { pagination } from "../API/utils/pagination";
 import Filter from "../components/Filter/Filter";
-
+import { useMemo } from "react";
+import { getMoviesByGender } from "../API/API";
 
 function Movies(): JSX.Element {
-    const {state, dispatch} = useMovieFetcher();
-    const [genre, setGenre] = useState("");
+    const { genre, page } = useParams();
 
-    function handleGenreChange(selectedGenre: string) {
-        setGenre(selectedGenre);
-        dispatch({type:"genres", genre})
-    }
+    const movies = useMemo(() => getMoviesByGender(genre || ""), [genre]);
 
+    const pageNumber = parseInt(page || "1");
+    const [pageMovies, maxPage] = pagination(movies, pageNumber, 19);
+    
     return (
         <>
             <Navbar />
             <PageTitle title="Movies" description="The people have spoken! See the most-watched movies now!" />
-            <Filter onGenreChange={ handleGenreChange }></Filter>
-            <ContentDisplay movies={state.movies} />
-            <ButtonsContainer>
-            <StyledButton onClick={() => dispatch({ type: "previous" })} disabled={state.page <= 1 ? true : false}>Previous</StyledButton>
-            <StyledButton onClick={() => dispatch({ type: "next" })}>Next</StyledButton>
-            </ButtonsContainer>
+            <Filter></Filter>
+            <ContentDisplay movies={pageMovies} />
+            <ButtonsPagination maximumPage={maxPage || 0} genre={genre || ""}></ButtonsPagination>
         </>
     );
 }

@@ -13,8 +13,8 @@ function Navbar(): JSX.Element {
                     <Logo logoSrc = {logoSrc}></Logo>
                     <LinksContainer>
                         <LeftLinks>
-                            <StyledLink to={{pathname: "/Movies"}}>Movies</StyledLink>
-                            <StyledLink to={{pathname: "/"}}>Watchlist</StyledLink>
+                            <StyledLink to={{pathname: "/movies/All/1"}}>Movies</StyledLink>
+                            <StyledLink to={{pathname: ""}}>Watchlist</StyledLink>
                         </LeftLinks>
                         <RightLinks>
                             <SearchBox></SearchBox>

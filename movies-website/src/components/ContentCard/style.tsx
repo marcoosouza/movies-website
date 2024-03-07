@@ -1,10 +1,12 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 export const Card = styled.div`
     max-width: 15rem;
     cursor: pointer;
     transition: transform 0.25s;
-   
+    position: relative;
+    
 `
 
 

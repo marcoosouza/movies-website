@@ -3,10 +3,10 @@ import { DropdownBox, DropdownContainer, OptionsContainer } from "./styles";
 
 type DropdownProps = {
     title: string,
-    options: ReactNode,
+    children: ReactNode,
 }
 
-function Dropdown({title, options}: DropdownProps): JSX.Element {
+function Dropdown({title, children}: DropdownProps): JSX.Element {
     const [ishover, setIsHover] = useState(false);
 
     return (
@@ -15,7 +15,7 @@ function Dropdown({title, options}: DropdownProps): JSX.Element {
                 <DropdownBox>
                     {title} <i className="fa-solid fa-caret-down"></i>
                 <OptionsContainer ishover = {ishover}>
-                    {options}
+                    {children}
                 </OptionsContainer>
                 </DropdownBox>
             </DropdownContainer>

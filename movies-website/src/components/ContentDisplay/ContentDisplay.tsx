@@ -1,31 +1,54 @@
-
-import ContentCard, { ContentCardProps } from "../ContentCard/ContentCard";
+import { useState } from "react";
+import { MovieType } from "../../API/API";
+import ContentCard from "../ContentCard/ContentCard";
 import { ContentContainer, Section } from "./style";
 
-type ContentDisplayProps = {
-    movies: ContentCardProps[] | undefined
+
+type MoviesClickState = {
+    movies: {title: string, views: number}[]
 }
 
-function ContentDisplay({movies}: ContentDisplayProps): JSX.Element {
+const initialState: MoviesClickState = {
+    movies: []
+}
+
+type ContentDisplayProps = {
+    movies: MovieType[];
+};
+
+function ContentDisplay({ movies }: ContentDisplayProps): JSX.Element {
+    const[viewsMovies, setViewsMovies] = useState<MoviesClickState>(initialState);
+
+    function handleClick(title: string, ) {
+        const tmp = {...viewsMovies}
+        let index = tmp.movies.findIndex((movie) => movie.title === title)
+
+        if(index !== -1) {
+            tmp.movies[index] = {...tmp.movies[index], views: tmp.movies[index].views + 1}
+
+        } else {
+            tmp.movies.push({title, views: 1});
+        }
+
+        setViewsMovies(tmp);
+    }
 
     return (
         <Section>
             <ContentContainer>
-                {movies ? movies.map((movie: ContentCardProps)  => (
+                {movies ? movies.map((movie: MovieType) => (
                     <ContentCard
-                        key={movie.id}
-                        id={movie.id}
-                        title={movie.title}
-                        rating={movie.rating}
-                        releseaseDate={movie.releseaseDate}
-                        posterSrc={movie.posterSrc}
-                        movies={undefined}                    />
-                )) : ""}
+                            key={movie.title}
+                            title={movie.title}
+                            rating={movie.rating}
+                            relesease={movie.release}
+                            thumbnail={movie.thumbnail}
+                            handleClick={handleClick}            
+                        />)
+                    ) : ""}
             </ContentContainer>
         </Section>
     );
 }
 
 export default ContentDisplay;
-
-

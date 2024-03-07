@@ -29,7 +29,7 @@ export const DropdownBox = styled.div`
 
 export const OptionsContainer = styled.div<DropdownProps>`
     display: ${({ishover}) => ishover ? "block": "none"};    
-    background-color: white;
+    background-color: black;
     position: absolute;
     top: 1.25rem;
     right: 0;
@@ -42,10 +42,11 @@ export const OptionsContainer = styled.div<DropdownProps>`
         border-bottom: 1px solid gray;
         font-weight: bolder;
         cursor: pointer;
+        color: white;
     }
 
     p:hover{
-        background-color: gray;
+        background-color: orange;
     }
 `
 

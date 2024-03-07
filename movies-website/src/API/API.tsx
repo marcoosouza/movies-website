@@ -1,68 +1,99 @@
 import * as movies from './movies-2020s.json';
 import { getRandomInt } from './utils/randomInt';
 
-
-export function getMovies(numberPerPage: number, page: number) {
-    const minIndex = numberPerPage * (page - 1);
-    const maxIndex = numberPerPage * page;
-
-    console.log(minIndex, maxIndex)
-    const pageMovies = movies.default.slice(minIndex, maxIndex)
-
-    const result = pageMovies.map((movie: any, index: number) => {       
-        return {
-                id: index,
-                title: movie.title,
-                rating: getRandomInt(5, 10),
-                releseaseDate: `${getRandomInt(1,31)}.${getRandomInt(1,12)}.${movie.year}`,
-                posterSrc: movie.thumbnail,
-        }
-    })
-
-    return result
+export type MovieAPI = {
+    title: string,
+    year: number,
+    cast: string[],
+    genres: string[],
+    href: string,
+    extract: string,
+    thumbnail: string,
+    thumbnail_width: number,
+    thumbnail_height: number,
 }
 
-export function getMoviesByKeyword(keyword: string) {
-    const filteredMovies = movies.default.filter((movie: any) => movie.title.includes(keyword))
+export type MovieType = {
+    title: string,
+    cast: string[],
+    genres: string[],
+    extract: string,
+    thumbnail: string,
+    rating: number,
+    release: string,
+  
+}
+
+
+export function getMoviesByKeyword(keyword: string): MovieType[] {
+    const filteredMovies = movies.default.filter((movie: MovieAPI) => movie.title.includes(keyword))
 
     if(!filteredMovies) {
-        return
+        return []
     }
 
-    const result = filteredMovies.map((movie: any, index: number) => {       
+    const result = filteredMovies.map((movie: MovieAPI, index: number) => {       
         return {
-                id: index,
-                title: movie.title,
-                rating: getRandomInt(5, 10),
-                releseaseDate: `${getRandomInt(1,31)}.${getRandomInt(1,12)}.${movie.year}`,
-                posterSrc: movie.thumbnail,
-        }
+            title: movie.title,
+            cast: movie.cast,
+            genres: movie.genres,
+            extract: movie.extract,
+            thumbnail: movie.thumbnail,
+            rating: getRandomInt(5, 10),
+            release: `${getRandomInt(1,31)}.${getRandomInt(1,12)}.${movie.year}`,
+    }
     })
 
     return result
 }
 
 
-export function getMoviesByGenre(genre: string) {
+export function getMoviesByGender(genre: string): MovieType[] {
+    let filteredMovies: MovieAPI[]  = [];
+
     if(genre === "All"){
-        return getMovies(20, 1)
+        filteredMovies = movies.default;
     }
-
-    const filteredMovies = movies.default.filter((movie: any) => movie.genres.includes(genre))
-    console.log(genre)
+    else{
+        filteredMovies = movies.default.filter((movie: MovieAPI) => movie.genres.includes(genre))
+    }
 
     if(!filteredMovies) {
-        return
+        return []
     }
 
-    const result = filteredMovies.map((movie: any, index: number) => {       
+    const result = filteredMovies.map((movie: MovieAPI) => {       
         return {
-                id: index,
-                title: movie.title,
-                rating: getRandomInt(5, 10),
-                releseaseDate: `${getRandomInt(1,31)}.${getRandomInt(1,12)}.${movie.year}`,
-                posterSrc: movie.thumbnail,
-        }
+            title: movie.title,
+            cast: movie.cast,
+            genres: movie.genres,
+            extract: movie.extract,
+            thumbnail: movie.thumbnail,
+            rating: getRandomInt(5, 10),
+            release: `${getRandomInt(1,31)}.${getRandomInt(1,12)}.${movie.year}`,
+    }
+    })
+
+    return result
+}
+
+export function getMoviesByName(name: string): MovieType[] {
+    const filteredMovies = movies.default.filter((movie: MovieAPI) => movie.title === name)
+
+    if(!filteredMovies) {
+        return []
+    }
+
+    const result = filteredMovies.map((movie: MovieAPI) => {       
+        return {
+            title: movie.title,
+            cast: movie.cast,
+            genres: movie.genres,
+            extract: movie.extract,
+            thumbnail: movie.thumbnail,
+            rating: getRandomInt(5, 10),
+            release: `${getRandomInt(1,31)}.${getRandomInt(1,12)}.${movie.year}`,
+    }
     })
 
     return result
