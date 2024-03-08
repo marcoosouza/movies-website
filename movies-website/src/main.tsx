@@ -7,10 +7,13 @@ import Home from './pages/Home'
 import Movies from './pages/Movies'
 import Search from './pages/Search.tsx'
 import MovieInfo from './pages/MovieInfo.tsx'
+import { Provider } from 'react-redux';
+import { store } from './state/store.ts'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <GlobalStyle />
+    <Provider store={store}>
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home />} />
@@ -19,5 +22,6 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         <Route path="/movie/:name/" element={<MovieInfo />} />
       </Routes>
     </BrowserRouter>
+    </Provider>
   </React.StrictMode>,
 )

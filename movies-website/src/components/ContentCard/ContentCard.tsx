@@ -1,20 +1,22 @@
+import { useDispatch } from "react-redux";
 import { Card, Container, ContainerPosterCard, PosterCard, StyledCardMovieDescription, StyledCardMovieRating, StyledCardMovieTitle, TextContainer } from "./style"
 import { useNavigate } from "react-router-dom";
+import { increment } from "../../state/views/viewsSlice";
 
 export type ContentCardProps = {
     title: string,
     rating: number,
     relesease: string,
     thumbnail: string,
-    handleClick: any;
 }
 
 
-function ContentCard({title, rating, relesease, thumbnail, handleClick}: ContentCardProps): JSX.Element {
+function ContentCard({title, rating, relesease, thumbnail}: ContentCardProps): JSX.Element {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     function handleCardClick() {
-        handleClick(title);
+        dispatch(increment(title))
         navigate(`/movie/${title}`)
     }
 

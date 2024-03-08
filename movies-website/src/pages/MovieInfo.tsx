@@ -8,6 +8,7 @@ function MovieInfo(): JSX.Element {
     const { name } = useParams(); 
     const [movie, setMovie] = useState<MovieType>();
 
+
     useEffect(() => {
         const data = getMoviesByName(name || "");
         const movieData = data[0];
